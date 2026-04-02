@@ -1,0 +1,1 @@
+CREATE TABLE person (id BIGINT NOT NULL AUTO_INCREMENT, first_name VARCHAR(80), last_name VARCHAR(80), address VARCHAR(100), gender VARCHAR(6), PRIMARY KEY (id));
