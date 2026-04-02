@@ -1,25 +1,28 @@
-package br.com.erudio.data.dto;
+package br.com.erudio.data.dto.v2;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class PersonDTO implements Serializable {
+public class PersonDTOV2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String firstName;
     private String lastName;
+    private Date birthDay;
     private String address;
     private String gender;
 
-    public PersonDTO() {
+    public PersonDTOV2() {
     }
 
-    public PersonDTO(Long id, String firstName, String lastName, String address, String gender) {
+    public PersonDTOV2(Long id, String firstName, String lastName, Date birthDay, String address, String gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.birthDay = birthDay;
         this.address = address;
         this.gender = gender;
     }
@@ -48,6 +51,14 @@ public class PersonDTO implements Serializable {
         this.lastName = lastName;
     }
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -67,12 +78,14 @@ public class PersonDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        PersonDTO person = (PersonDTO) o;
-        return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address) && Objects.equals(gender, person.gender);
+        PersonDTOV2 that = (PersonDTOV2) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(birthDay, that.birthDay) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, birthDay, address, gender);
     }
 }
+
+
