@@ -2,6 +2,7 @@ package br.com.erudio.services;
 
 import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.dto.PersonDTO;
+import br.com.erudio.exception.RequiredObjectIsNullException;
 import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.model.Person;
 import br.com.erudio.repository.PersonRepository;
@@ -53,6 +54,9 @@ public class PersonServices {
     }
 
     public PersonDTO create(PersonDTO personDTO) {
+
+        if(personDTO == null) throw  new RequiredObjectIsNullException();
+
         logger.info("Creating one Person!");
         var entity = parseObject(personDTO, Person.class);
 
@@ -64,6 +68,8 @@ public class PersonServices {
     }
 
     public PersonDTO update(PersonDTO person) {
+
+        if(person == null) throw  new RequiredObjectIsNullException();
 
         logger.info("Updating one Person!");
         Person entity = repository.findById(person.getId())
