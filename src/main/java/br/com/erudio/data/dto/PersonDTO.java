@@ -1,9 +1,11 @@
 package br.com.erudio.data.dto;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PersonDTO implements Serializable {
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,14 +16,6 @@ public class PersonDTO implements Serializable {
     private String gender;
 
     public PersonDTO() {
-    }
-
-    public PersonDTO(Long id, String firstName, String lastName, String address, String gender) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.gender = gender;
     }
 
     public Long getId() {
