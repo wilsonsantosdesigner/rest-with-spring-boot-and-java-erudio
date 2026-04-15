@@ -1,4 +1,4 @@
-package br.com.erudio.services;
+package br.com.erudio.unittests.services;
 
 import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.dto.PersonDTO;
@@ -45,7 +45,8 @@ public class PersonServices {
         logger.info("Buscando uma pessoa!");
 
         var person = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado Pessoa com o ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException
+                        ("Não foi encontrado Pessoa com o ID: " + id));
         var personDTO = parseObject(person, PersonDTO.class);
 
         addHateoasLinks(personDTO);
