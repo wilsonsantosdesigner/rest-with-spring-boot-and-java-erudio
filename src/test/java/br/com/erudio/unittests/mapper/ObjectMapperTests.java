@@ -1,6 +1,6 @@
 package br.com.erudio.unittests.mapper;
 import static br.com.erudio.mapper.ObjectMapper.parseObject;
-import static br.com.erudio.mapper.ObjectMapper.parseObjects;
+import static br.com.erudio.mapper.ObjectMapper.parseListObjects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class ObjectMapperTests {
 
     @Test
     public void parseEntityListToDTOListTest() {
-        List<PersonDTO> outputList = parseObjects(inputObject.mockEntityList(), PersonDTO.class);
+        List<PersonDTO> outputList = parseListObjects(inputObject.mockEntityList(), PersonDTO.class);
         PersonDTO outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());
@@ -70,7 +70,7 @@ public class ObjectMapperTests {
 
     @Test
     public void parserDTOListToEntityListTest() {
-        List<Person> outputList = parseObjects(inputObject.mockDTOList(), Person.class);
+        List<Person> outputList = parseListObjects(inputObject.mockDTOList(), Person.class);
         Person outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());

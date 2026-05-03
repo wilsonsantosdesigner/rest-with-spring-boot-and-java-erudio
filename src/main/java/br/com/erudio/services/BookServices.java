@@ -1,4 +1,4 @@
-package br.com.erudio.unittests.services;
+package br.com.erudio.services;
 
 import br.com.erudio.controllers.BookController;
 import br.com.erudio.data.dto.BookDTO;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static br.com.erudio.mapper.ObjectMapper.parseObject;
-import static br.com.erudio.mapper.ObjectMapper.parseObjects;
+import static br.com.erudio.mapper.ObjectMapper.parseListObjects;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -31,7 +31,7 @@ public class BookServices {
 
         logger.info("Finding all Book!");
 
-        var books = parseObjects(repository.findAll(), BookDTO.class);
+        var books = parseListObjects(repository.findAll(), BookDTO.class);
         books.forEach(this::addHateoasLinks);
         return books;
     }
