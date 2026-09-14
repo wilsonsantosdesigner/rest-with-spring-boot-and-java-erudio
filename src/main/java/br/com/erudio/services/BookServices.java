@@ -1,7 +1,9 @@
 package br.com.erudio.services;
 
 import br.com.erudio.controllers.BookController;
+import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.dto.BookDTO;
+import br.com.erudio.data.dto.PersonDTO;
 import br.com.erudio.exception.RequiredObjectIsNullException;
 import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.model.Book;
@@ -9,6 +11,12 @@ import br.com.erudio.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,19 +29,34 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Service
 public class BookServices {
 
-    private final Logger logger = LoggerFactory.getLogger(
-            BookServices.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(BookServices.class.getName());
 
     @Autowired
     BookRepository repository;
 
-    public List<BookDTO> findAll() {
+    @Autowired
+    PagedResourcesAssembler<BookDTO> assembler;
+
+    public PagedModel<EntityModel<BookDTO>> findAll(Pageable pageable) {
 
         logger.info("Finding all Book!");
 
-        var books = parseListObjects(repository.findAll(), BookDTO.class);
-        books.forEach(this::addHateoasLinks);
-        return books;
+        var books = repository.findAll(pageable);
+
+        var booksWithLinks = books.map(book -> {
+            var dto = parseObject(book, BookDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder.methodOn(BookController.class)
+                                .findAll(
+                                        pageable.getPageNumber(),
+                                        pageable.getPageSize(),
+                                        String.valueOf(pageable.getSort())))
+                .withSelfRel();
+        return assembler.toModel(booksWithLinks, findAllLink);
     }
 
     public BookDTO findById(Long id) {
@@ -90,7 +113,7 @@ public class BookServices {
             .findById(dto.getId())).withSelfRel()
             .withType("GET"));
         dto.add(linkTo(methodOn(BookController.class)
-            .findAll()).withRel("findAll")
+            .findAll(1, 12, "asc")).withRel("findAll")
             .withType("GET"));
         dto.add(linkTo(methodOn(BookController.class)
             .create(dto)).withRel("create")

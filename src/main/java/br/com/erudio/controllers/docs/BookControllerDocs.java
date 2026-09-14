@@ -6,12 +6,13 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface BookControllerDocs {
 
@@ -44,7 +45,10 @@ public interface BookControllerDocs {
                     responseCode = "500", content = @Content)
         }
     )
-    List<BookDTO> findAll();
+    ResponseEntity<PagedModel<EntityModel<BookDTO>>> findAll(
+        @RequestParam(value = "page", defaultValue = "0") Integer page,
+        @RequestParam(value = "size", defaultValue = "12") Integer size,
+        @RequestParam(value = "direction", defaultValue = "asc") String direction);
 
     @Operation(summary = "Finds a Book",
         description = "Find a specific book by your ID",
