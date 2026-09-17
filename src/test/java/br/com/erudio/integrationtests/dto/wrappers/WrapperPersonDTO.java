@@ -10,7 +10,8 @@ public class WrapperPersonDTO implements Serializable {
     @JsonProperty("_embedded")
     private PersonEmbeddedDTO embedded;
 
-    public WrapperPersonDTO(){}
+    public WrapperPersonDTO() {
+    }
 
     public PersonEmbeddedDTO getEmbedded() {
         return embedded;

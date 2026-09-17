@@ -54,37 +54,37 @@ class BookServicesTest {
         assertNotNull(result.getLinks());
 
         assertNotNull(result.getLinks().stream()
-            .anyMatch(link -> link.getRel().value().equals("self")
-                    && link.getHref().endsWith("/api/book/v1/1")
-                    && link.getType().equals("GET")
-            ));
+                .anyMatch(link -> link.getRel().value().equals("self")
+                        && link.getHref().endsWith("/api/book/v1/1")
+                        && link.getType().equals("GET")
+                ));
 
         assertNotNull(result.getLinks().stream()
-            .anyMatch(link -> link.getRel().value().equals("findAll")
-                    && link.getHref().endsWith("/api/book/v1")
-                    && link.getType().equals("GET")
-            )
+                .anyMatch(link -> link.getRel().value().equals("findAll")
+                        && link.getHref().endsWith("/api/book/v1")
+                        && link.getType().equals("GET")
+                )
         );
 
         assertNotNull(result.getLinks().stream()
-            .anyMatch(link -> link.getRel().value().equals("create")
-                    && link.getHref().endsWith("/api/book/v1")
-                    && link.getType().equals("POST")
-            )
+                .anyMatch(link -> link.getRel().value().equals("create")
+                        && link.getHref().endsWith("/api/book/v1")
+                        && link.getType().equals("POST")
+                )
         );
 
         assertNotNull(result.getLinks().stream()
-            .anyMatch(link -> link.getRel().value().equals("update")
-                    && link.getHref().endsWith("/api/book/v1")
-                    && link.getType().equals("PUT")
-            )
+                .anyMatch(link -> link.getRel().value().equals("update")
+                        && link.getHref().endsWith("/api/book/v1")
+                        && link.getType().equals("PUT")
+                )
         );
 
         assertNotNull(result.getLinks().stream()
-            .anyMatch(link -> link.getRel().value().equals("delete")
-                    && link.getHref().endsWith("/api/book/v1/1")
-                    && link.getType().equals("DELETE")
-            )
+                .anyMatch(link -> link.getRel().value().equals("delete")
+                        && link.getHref().endsWith("/api/book/v1/1")
+                        && link.getType().equals("DELETE")
+                )
         );
 
         assertEquals("Some Author1", result.getAuthor());
@@ -152,9 +152,9 @@ class BookServicesTest {
     @Test
     void testCreateWithNullBook() {
         Exception exception = assertThrows(RequiredObjectIsNullException.class,
-        () -> {
-            service.create(null);
-        });
+                () -> {
+                    service.create(null);
+                });
 
         String expectedMessage = "It is not allowed to persist a null object!";
         String actualMessage = exception.getMessage();

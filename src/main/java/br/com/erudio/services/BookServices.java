@@ -1,9 +1,7 @@
 package br.com.erudio.services;
 
 import br.com.erudio.controllers.BookController;
-import br.com.erudio.controllers.PersonController;
 import br.com.erudio.data.dto.BookDTO;
-import br.com.erudio.data.dto.PersonDTO;
 import br.com.erudio.exception.RequiredObjectIsNullException;
 import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.model.Book;
@@ -19,10 +17,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import static br.com.erudio.mapper.ObjectMapper.parseObject;
-import static br.com.erudio.mapper.ObjectMapper.parseListObjects;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -63,8 +58,8 @@ public class BookServices {
         logger.info("Finding one Book!");
 
         var entity = repository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-        var dto =  parseObject(entity, BookDTO.class);
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var dto = parseObject(entity, BookDTO.class);
         addHateoasLinks(dto);
         return dto;
     }
@@ -110,19 +105,19 @@ public class BookServices {
 
     private void addHateoasLinks(BookDTO dto) {
         dto.add(linkTo(methodOn(BookController.class)
-            .findById(dto.getId())).withSelfRel()
-            .withType("GET"));
+                .findById(dto.getId())).withSelfRel()
+                .withType("GET"));
         dto.add(linkTo(methodOn(BookController.class)
-            .findAll(1, 12, "asc")).withRel("findAll")
-            .withType("GET"));
+                .findAll(1, 12, "asc")).withRel("findAll")
+                .withType("GET"));
         dto.add(linkTo(methodOn(BookController.class)
-            .create(dto)).withRel("create")
-            .withType("POST"));
+                .create(dto)).withRel("create")
+                .withType("POST"));
         dto.add(linkTo(methodOn(BookController.class)
-            .update(dto)).withRel("update")
-            .withType("PUT"));
+                .update(dto)).withRel("update")
+                .withType("PUT"));
         dto.add(linkTo(methodOn(BookController.class)
-            .delete(dto.getId())).withRel("delete")
-            .withType("DELETE"));
+                .delete(dto.getId())).withRel("delete")
+                .withType("DELETE"));
     }
 }

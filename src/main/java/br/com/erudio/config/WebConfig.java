@@ -17,9 +17,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         var allowedOrigins = corsOriginPatterns.split(",");
         registry.addMapping("/**")
-            .allowedOrigins(allowedOrigins)
-            .allowedMethods("*")
-            .allowCredentials(true);
+                .allowedOrigins(allowedOrigins)
+                .allowedMethods("*")
+                .allowCredentials(true);
 
     }
 
@@ -28,12 +28,12 @@ public class WebConfig implements WebMvcConfigurer {
             ContentNegotiationConfigurer configurer) {
 
         configurer.favorParameter(false)
-            .ignoreAcceptHeader(false)
-            .useRegisteredExtensionsOnly(false)
-            .defaultContentType(MediaType.APPLICATION_JSON)
-            .mediaType("json", MediaType.APPLICATION_JSON)
-            .mediaType("xml", MediaType.APPLICATION_XML)
-            .mediaType("yaml", MediaType.APPLICATION_YAML);
+                .ignoreAcceptHeader(false)
+                .useRegisteredExtensionsOnly(false)
+                .defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaType("json", MediaType.APPLICATION_JSON)
+                .mediaType("xml", MediaType.APPLICATION_XML)
+                .mediaType("yaml", MediaType.APPLICATION_YAML);
 
     }
 }

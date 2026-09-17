@@ -31,7 +31,8 @@ public class Book implements Serializable {
     @Column(nullable = false, length = 250)
     private String title;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Long getId() {
         return id;
@@ -79,20 +80,20 @@ public class Book implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
         return Objects.equals(getId(), book.getId()) &&
-            Objects.equals(getAuthor(), book.getAuthor())
-            && Objects.equals(getLaunchDate(),
-                                book.getLaunchDate())
-            && Objects.equals(getPrice(), book.getPrice())
-            && Objects.equals(getTitle(), book.getTitle());
+                Objects.equals(getAuthor(), book.getAuthor())
+                && Objects.equals(getLaunchDate(),
+                book.getLaunchDate())
+                && Objects.equals(getPrice(), book.getPrice())
+                && Objects.equals(getTitle(), book.getTitle());
     }
 
     @Override
     public int hashCode() {
 
         return Objects.hash(getId(),
-            getAuthor(),
-            getLaunchDate(),
-            getPrice(),
-            getTitle());
+                getAuthor(),
+                getLaunchDate(),
+                getPrice(),
+                getTitle());
     }
 }

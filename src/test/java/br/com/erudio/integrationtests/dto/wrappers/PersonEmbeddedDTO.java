@@ -15,7 +15,8 @@ public class PersonEmbeddedDTO implements Serializable {
     @JsonProperty("people")
     private List<PersonDTO> people;
 
-    public PersonEmbeddedDTO() {}
+    public PersonEmbeddedDTO() {
+    }
 
     public List<PersonDTO> getPeople() {
         return people;

@@ -1,10 +1,13 @@
 package br.com.erudio.services;
 
 import br.com.erudio.config.FileStorageConfig;
+import br.com.erudio.exception.FileNotFoundException;
 import br.com.erudio.exception.FileStorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,7 +48,7 @@ public class FileStorageService {
                 throw new FileStorageException("Sorry! Filename contains a invalid path sequence " + fileName);
             }
 
-            LOGGER.error("Saving file in disk");
+            LOGGER.info("Saving file in disk");
 
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -55,6 +58,22 @@ public class FileStorageService {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again.", e);
         }
 
+    }
+
+    public Resource loadFileAsResource(String fileName) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                LOGGER.error("Could not read file {}. Please try again.", fileName);
+                throw new FileNotFoundException("Could not load file " + fileName + ". Please try again.");
+            }
+        } catch (Exception e) {
+            LOGGER.error("Could not load file {}. Please try again.", fileName, e);
+            throw new FileNotFoundException("Could not load file " + fileName + ". Please try again.", e);
+        }
     }
 
 }

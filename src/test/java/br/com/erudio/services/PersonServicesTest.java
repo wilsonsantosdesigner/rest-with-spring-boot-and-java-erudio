@@ -54,8 +54,8 @@ class PersonServicesTest {
 
         assertNotNull(result.getLinks().stream()
                 .anyMatch(link -> link.getRel().value().equals("self")
-                && link.getHref().endsWith("api/person/v1/1")
-                && link.getType().equals("GET"))
+                        && link.getHref().endsWith("api/person/v1/1")
+                        && link.getType().equals("GET"))
         );
 
         assertNotNull(result.getLinks().stream()
@@ -143,7 +143,7 @@ class PersonServicesTest {
     }
 
     @Test
-    void testCreateWithNullPerson(){
+    void testCreateWithNullPerson() {
 
         Exception exception = assertThrows(RequiredObjectIsNullException.class,
                 () -> {

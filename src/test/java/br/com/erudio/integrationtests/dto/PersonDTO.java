@@ -16,7 +16,8 @@ public class PersonDTO implements Serializable {
     private String gender;
     private Boolean enabled;
 
-    public PersonDTO() {}
+    public PersonDTO() {
+    }
 
     public Long getId() {
         return id;

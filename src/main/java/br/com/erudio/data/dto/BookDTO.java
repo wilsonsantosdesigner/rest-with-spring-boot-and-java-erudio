@@ -18,7 +18,8 @@ public class BookDTO extends RepresentationModel<BookDTO> implements Serializabl
     private Double price;
     private String title;
 
-    public BookDTO() {}
+    public BookDTO() {
+    }
 
     public Long getId() {
         return id;
