@@ -113,7 +113,7 @@ id = $P{PERSON_ID}
 		<band height="170" splitType="Stretch">
 			<element kind="subreport" uuid="9800124a-927e-47a0-afdc-cc6c88f1f759" x="8" y="5" width="538" height="160">
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<expression><![CDATA[$P{SUB_REPORT_DIR}]]></expression>
+				<expression><![CDATA["books.jasper"]]></expression>
 				<parameter name="PERSON_ID">
 					<expression><![CDATA[$P{PERSON_ID}]]></expression>
 				</parameter>
