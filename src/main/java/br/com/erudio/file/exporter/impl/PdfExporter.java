@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class PdfExporter implements FileExporter {
@@ -62,12 +59,12 @@ public class PdfExporter implements FileExporter {
 
         JRBeanCollectionDataSource subReportDataSource = new JRBeanCollectionDataSource(person.getBooks());
 
-        String path = getClass().getResource("/templates/books.jasper").getPath();
+        //String path = getClass().getResource("/templates/books.jasper").getPath();
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("SUB_REPORT_DATA_SOURCE", subReportDataSource);
         parameters.put("BOOK_SUB_REPORT", subReport);
-        parameters.put("SUB_REPORT_DIR", path);
+        //parameters.put("SUB_REPORT_DIR", path);
         parameters.put("QR_CODEIMAGE", qrCodeStream);
 
         JRBeanCollectionDataSource mainDataSource = new JRBeanCollectionDataSource(Collections.singletonList(person));
@@ -76,6 +73,8 @@ public class PdfExporter implements FileExporter {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()){
             JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
             return new ByteArrayResource(outputStream.toByteArray());
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
 
